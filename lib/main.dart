@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:appflutterc3movil/src/pages/saveprofile.dart';
+import 'package:appflutterc3movil/src/pages/updateprofile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SaveProfile(),
     );
   }
 }
