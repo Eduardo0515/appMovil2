@@ -2,7 +2,9 @@
     package="com.example.appflutterc3movil">
    <application
         android:label="appflutterc3movil"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        >
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
