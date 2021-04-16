@@ -5,23 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-List<UserProfile> parseListProfile(String reponseBody) {
-  final parsed = jsonDecode(reponseBody).cast<Map<String, dynamic>>();
-  print(parsed);
-  return parsed.map<UserProfile>((json) => UserProfile.fromJson(json)).toList();
-}
-
-Future<List<UserProfile>> fechtProfileDetail(http.Client client) async {
-  final response = await http.get(
-      Uri.parse('http://34.239.109.204/api/v1/profile/profile_detail/42/'),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": "Token cbb26288d097255ebf4e4a02339ad53561e64c40"
-      });
-
-  return parseListProfile(response.body);
-}
 
 class Profile extends StatelessWidget {
   final String idprofile;
