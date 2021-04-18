@@ -1,15 +1,16 @@
 import 'dart:convert';
 
+import 'package:appflutterc3movil/src/models/Login.dart';
 import 'package:appflutterc3movil/src/models/userProfile.dart';
+import 'package:appflutterc3movil/src/pages/saveprofile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-
 class Profile extends StatelessWidget {
-  final String idprofile;
+  final Login login;
 
-  Profile({Key keys, @required this.idprofile}) : super(key: keys);
+  Profile({Key keys, @required this.login}) : super(key: keys);
 
   List<UserProfile> parseListProfile(String reponseBody) {
     final parsed = jsonDecode(reponseBody).cast<Map<String, dynamic>>();
@@ -21,11 +22,11 @@ class Profile extends StatelessWidget {
   Future<List<UserProfile>> fechtProfileDetail(http.Client client) async {
     final response = await http.get(
         Uri.parse(
-            'http://34.239.109.204/api/v1/profile/profile_detail/${idprofile}/'),
+            'http://34.239.109.204/api/v1/profile/profile_detail/${login.user_id}/'),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": "Token cbb26288d097255ebf4e4a02339ad53561e64c40"
+          "Authorization": "Token " + login.token
         });
 
     return parseListProfile(response.body);
@@ -36,7 +37,7 @@ class Profile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("My Profile " + idprofile),
+        title: Text("My Profile " + login.name),
       ),
       body: FutureBuilder<List<UserProfile>>(
         future: fechtProfileDetail(http.Client()),
@@ -47,6 +48,16 @@ class Profile extends StatelessWidget {
               ? ProfileList(profilesList: snapshot.data)
               : Center(child: CircularProgressIndicator());
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SaveProfile(login: login)),
+          );
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.blue,
       ),
     );
   }

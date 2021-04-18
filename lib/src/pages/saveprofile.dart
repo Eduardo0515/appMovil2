@@ -1,24 +1,30 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:appflutterc3movil/src/models/Login.dart';
 import 'package:appflutterc3movil/src/models/UserProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class SaveProfile extends StatefulWidget {
+  final Login login;
+  SaveProfile({Key keys, @required this.login}) : super(key: keys);
   @override
-  State<SaveProfile> createState() => _SaveProfileState();
+  State<SaveProfile> createState() => _SaveProfileState(login: login);
 }
 
 class _SaveProfileState extends State<SaveProfile> {
+  
   final TextEditingController _cntrlrName = TextEditingController();
   final TextEditingController _cntrlrLName = TextEditingController();
   final TextEditingController _cntrlrPhone = TextEditingController();
   final TextEditingController _cntrlrAddress = TextEditingController();
   final TextEditingController _cntrlrUser = TextEditingController();
   final TextEditingController _cntrlrEmail = TextEditingController();
-
+  final Login login;
+  _SaveProfileState({@required this.login});
+  
   Future<UserProfile> _futureUser;
   String error = "";
   @override
@@ -184,7 +190,7 @@ class _SaveProfileState extends State<SaveProfile> {
       onPressed: () {
         setState(() {
           _futureUser = saveUserProfile(_cntrlrName.text, _cntrlrLName.text,
-              _cntrlrPhone.text, _cntrlrAddress.text, 42, _cntrlrEmail.text);
+              _cntrlrPhone.text, _cntrlrAddress.text, login.user_id, _cntrlrEmail.text, login.token);
         });
       },
     );
@@ -192,12 +198,12 @@ class _SaveProfileState extends State<SaveProfile> {
 }
 
 Future<UserProfile> saveUserProfile(String name, String lName, String phone,
-    String address, int user, String email) async {
+    String address, int user, String email, String token) async {
   final response = await http.post(
     Uri.parse('http://34.239.109.204/api/v1/profile/profile_list/'),
     headers: <String, String>{
       'Content-Type': 'application/json',
-      "Authorization": "Token cbb26288d097255ebf4e4a02339ad53561e64c40"
+      "Authorization": "Token "+token
     },
     body: jsonEncode(<String, dynamic>{
       'name': name,

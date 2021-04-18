@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:appflutterc3movil/src/pages/home.dart';
+import 'package:appflutterc3movil/src/pages/profile.dart';
 import 'package:appflutterc3movil/src/pages/register.dart';
+import 'package:appflutterc3movil/src/pages/saveprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:appflutterc3movil/src/models/Login.dart';
@@ -157,8 +159,8 @@ class _State extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                            builder: (context) => Home(
-                            data: loginD,
+                            builder: (context) => Profile(
+                            login: loginD,
                           )),
                           ),
                         }
