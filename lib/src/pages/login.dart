@@ -23,33 +23,26 @@ class _State extends State<LoginPage> {
   Future<List<Login>> postLogin(String user, String password) async {
     List<Login> login = [];
 
-    String url = '192.168.1.69:8080';
+    String url = 'http://34.239.109.204/api/v1/login/';
 
-    Map<String, String> params = {"user": user, "password": password};
+    Map<String, String> params = {"username": user, "password": password};
 
     Map<String, String> header = {
       HttpHeaders.contentTypeHeader: "application/json",
     };
 
-    Uri uri = Uri.http(url, 'user');
-    print(uri);
-    print(header);
-    print(jsonEncode(params));
-    final response = await http.post(uri,
-        headers: {
-          HttpHeaders.contentTypeHeader: "application/json",
-        },
-        body: jsonEncode(params));
+    Uri uri = Uri.parse(url);
+
+    final response =
+        await http.post(uri, headers: header, body: jsonEncode(params));
 
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
       final jsonData = jsonDecode(body);
 
-      login.add(Login(jsonData['token'], jsonData['user']));
+      login.add(Login(jsonData['token'], jsonData['user_id'], jsonData['email'],
+          jsonData['name']));
       return login;
-    } else {
-      var response1 = response.body;
-      print("ERROR DE LOGIN $response1");
     }
   }
 
@@ -153,10 +146,8 @@ class _State extends State<LoginPage> {
                           print("OK - Inicio de sesion correcto"),
                           print("Token user: "),
                           print(value[0].token),
-                          loginD = Login(
-                            value[0].token,
-                            value[0].email,
-                          ),
+                          loginD = Login(value[0].token, value[0].user_id,
+                              value[0].email, value[0].name),
                           Fluttertoast.showToast(
                               msg: 'Inicio de sesión correcto',
                               toastLength: Toast.LENGTH_SHORT,
@@ -191,7 +182,7 @@ class _State extends State<LoginPage> {
                     print("Regístrate");
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Register()),
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
                     );
                   },
                 )

@@ -21,9 +21,8 @@ class Profile extends StatelessWidget {
 
   Future<List<UserProfile>> fechtProfileDetail(http.Client client) async {
     final response = await http.get(
-        //TODO revisar login email
         Uri.parse(
-            'http://34.239.109.204/api/v1/profile/profile_detail/${login.email}/'),
+            'http://34.239.109.204/api/v1/profile/profile_detail/${login.user_id}/'),
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
@@ -38,7 +37,7 @@ class Profile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("My Profile " + login.email),
+        title: Text("My Profile " + login.name),
       ),
       body: FutureBuilder<List<UserProfile>>(
         future: fechtProfileDetail(http.Client()),

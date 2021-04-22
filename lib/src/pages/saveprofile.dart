@@ -188,13 +188,12 @@ class _SaveProfileState extends State<SaveProfile> {
       child: Text('Guardar información'),
       onPressed: () {
         setState(() {
-          //TODO revisar valor 0
           _futureUser = saveUserProfile(
               _cntrlrName.text,
               _cntrlrLName.text,
               _cntrlrPhone.text,
               _cntrlrAddress.text,
-              0,
+              login.user_id,
               _cntrlrEmail.text,
               login.token);
         });
