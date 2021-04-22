@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:appflutterc3movil/src/models/Login.dart';
 import 'package:appflutterc3movil/src/models/UserProfile.dart';
+import 'package:appflutterc3movil/src/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -195,7 +196,13 @@ class _SaveProfileState extends State<SaveProfile> {
               _cntrlrAddress.text,
               login.user_id,
               _cntrlrEmail.text,
-              login.token);
+              login.token).then((value) => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Profile(
+                                      login: login,
+                                    )),
+                          ),);
         });
       },
     );
