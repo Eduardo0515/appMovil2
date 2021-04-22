@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:appflutterc3movil/src/models/Register.dart';
 import 'package:appflutterc3movil/src/pages/home.dart';
+import 'package:appflutterc3movil/src/pages/login.dart';
 import 'package:appflutterc3movil/src/pages/profile.dart';
 import 'package:appflutterc3movil/src/pages/register.dart';
 import 'package:appflutterc3movil/src/pages/saveprofile.dart';
@@ -162,6 +163,8 @@ class _State extends State<RegisterPage> {
                 registerFinal = postRegister(nameController.text,
                     passwordController1.text, passwordController2.text);
                 registerFinal.then((value) => {
+                      print(value),
+                      print("AAAAAAA"),
                       if (value == null)
                         {
                           print("ERROR - Revise los datos ingresados"),
@@ -188,10 +191,37 @@ class _State extends State<RegisterPage> {
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
                               fontSize: 20.0),
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          ),
                         }
                     });
               },
             )),
+        Container(
+            padding: EdgeInsets.all(30),
+            child: Row(
+              children: <Widget>[
+                Text('¿Ya tienes una cuenta?', style: TextStyle(fontSize: 14)),
+                FlatButton(
+                  textColor: Colors.blue,
+                  child: Text(
+                    'Inicia sesión',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    print("Inicia sesión");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                )
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ))
       ],
     )));
   }
