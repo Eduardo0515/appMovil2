@@ -35,9 +35,27 @@ class _SaveProfileState extends State<SaveProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          title: Text('Guardar información'),
-        ),
+            centerTitle: true,
+            title: Text('Guardar información'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.list,
+                  color: Colors.white,
+                  size: 32,
+                ),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Profile(
+                        login: login,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ]),
         body: SingleChildScrollView(
           child: (_futureUser == null)
               ? Column(
@@ -190,19 +208,22 @@ class _SaveProfileState extends State<SaveProfile> {
       onPressed: () {
         setState(() {
           _futureUser = saveUserProfile(
-              _cntrlrName.text,
-              _cntrlrLName.text,
-              _cntrlrPhone.text,
-              _cntrlrAddress.text,
-              login.user_id,
-              _cntrlrEmail.text,
-              login.token).then((value) => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Profile(
-                                      login: login,
-                                    )),
-                          ),);
+                  _cntrlrName.text,
+                  _cntrlrLName.text,
+                  _cntrlrPhone.text,
+                  _cntrlrAddress.text,
+                  login.user_id,
+                  _cntrlrEmail.text,
+                  login.token)
+              .then(
+            (value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Profile(
+                        login: login,
+                      )),
+            ),
+          );
         });
       },
     );
